@@ -24,10 +24,6 @@ Usage
 - *CPU6809.steps(N)* - Execute instructions as real CPU, which takes "no less than N" clock ticks.
 - *CPU6809.disasm(a, b, c, d, e, pc)* - Disassembler. Takes 5 successive values (the longest 6809 opcode takes 5 bytes) and value of program counter (for evaluating relative jumps). Returns array of two values - mnemo code and instruction length in bytes, eg. ["TFR X,S",2].
 
-Disassembler:
-
-*NOT YET READY*
-
 Tests
 -----
 
