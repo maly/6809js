@@ -574,6 +574,7 @@ var oCOM = function(b) {
     CC &= ~(F_ZERO | F_NEGATIVE | F_OVERFLOW);
     b ^= 0xff;
     CC |= flagsNZ[b];
+    CC |= F_CARRY;
     return b;
 };
 
