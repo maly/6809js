@@ -22,10 +22,7 @@ Usage
 - *CPU6809.set(register, value)* - sets internal register (named PC, SP, U, A, B, X, Y, DP, FLAGS) to a given value (SP means S, it's for compatibility)
 - *CPU6809.status()* - Returns a object {pc, sp, u, a, b, x, y, dp, flags} with actual state of internal registers
 - *CPU6809.steps(N)* - Execute instructions as real CPU, which takes "no less than N" clock ticks.
-
-Disassembler:
-
-*NOT YET READY*
+- *CPU6809.disasm(a, b, c, d, e, pc)* - Disassembler. Takes 5 successive values (the longest 6809 opcode takes 5 bytes) and value of program counter (for evaluating relative jumps). Returns array of two values - mnemo code and instruction length in bytes, eg. ["TFR X,S",2].
 
 Tests
 -----

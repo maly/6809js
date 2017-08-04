@@ -256,3 +256,75 @@ test( "LDY extended", function() {
 	equal(CPU6809.T(),7,"Timer");
 
 });
+
+
+
+
+module("Disassembler");
+
+test("simple instruction", function(){
+	var d = CPU6809.disasm(0x12, 0x80,0x5c,0,0,0xdc84);
+	equal (d[0],"NOP");
+	equal (d[1],1);
+});
+test("illegal instruction", function(){
+	var d = CPU6809.disasm(0x01, 0x80,0x5c,0,0,0xdc84);
+	equal (d[0],"???");
+	equal (d[1],1);
+});
+
+
+test("simple instruction + postbyte", function(){
+	var d = CPU6809.disasm(0xa7, 0x80,0x5c,0,0,0xdc84);
+	equal (d[0],"STA ,X+");
+	equal (d[1],2);
+});
+
+test("EXG postbyte", function(){
+	var d = CPU6809.disasm(0x1e, 0x31,0x00,0x83,0,0xdc84);
+	equal (d[0],"EXG U,X");
+	equal (d[1],2);
+});
+test("TFR postbyte", function(){
+	var d = CPU6809.disasm(0x1f, 0x14,0x00,0x83,0,0xdc84);
+	equal (d[0],"TFR X,S");
+	equal (d[1],2);
+});
+test("PULS", function(){
+	var d = CPU6809.disasm(0x35, 0x96,0xe5,0x10,0,0xdc84);
+	equal (d[0],"PULS A,B,X,PC");
+	equal (d[1],2);
+});
+
+
+test("Prefixed 0x11", function(){
+	var d = CPU6809.disasm(0x11, 0x83,0xe5,0x10,0,0xdc84);
+	equal (d[0],"CMPU #$E510");
+	equal (d[1],4);
+});
+test("Prefixed 0x11, indexed", function(){
+	var d = CPU6809.disasm(0x11, 0xA3,0x81,0x10,0,0xdc84);
+	equal (d[0],"CMPU ,X++");
+	equal (d[1],3);
+});
+test("Prefixed 0x11, indexed, indirect", function(){
+	var d = CPU6809.disasm(0x11, 0xA3,0x93,0x10,0,0xdc84);
+	equal (d[0],"CMPU [,--X]");
+	equal (d[1],3);
+});
+test("Prefixed 0x11, indexed, offset 8", function(){
+	var d = CPU6809.disasm(0x11, 0xA3,0xA8,0x10,0,0xdc84);
+	equal (d[0],"CMPU 16,Y");
+	equal (d[1],4);
+});
+test("Prefixed 0x11, indexed, negative offset 8", function(){
+	var d = CPU6809.disasm(0x11, 0xA3,0xA8,0x80,0,0xdc84);
+	equal (d[0],"CMPU -128,Y");
+	equal (d[1],4);
+});
+test("Prefixed 0x11, indexed, offset 16+PC", function(){
+	var d = CPU6809.disasm(0x11, 0xA3,0x8D,0x02,0x08,0xdc84);
+	equal (d[0],"CMPU 520,PC");
+	equal (d[1],5);
+});
+
