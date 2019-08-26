@@ -35,3 +35,8 @@ Roadmap
 - full interrupts support
 - full CWAI emulation
 - HD6309 extended mode
+
+Support
+-------
+
+[![Become a Patron!](https://github.com/omenmicro/omenmicro.eu/blob/master/img/become-a-patron-button.png?raw=true)](https://www.patreon.com/bePatron?u=23689010)
