@@ -1,6 +1,6 @@
 module("Syntax and coding standards");
 
-jsHintTest( "JSHint", "../6809.js");
+//jsHintTest( "JSHint", "../6809.js");
 
 module("Basic tests");
 
@@ -130,7 +130,131 @@ test( "LEAX ,s++", function() {
 });
 
 
-module("Simple BRA tests");
+module("BGT tests");
+
+var nzv=0;
+test( "BGT "+nzv, function() {
+	RAM = [0x2e,0xfe];
+	CPU6809.init(byteTo,byteAt,null);
+	CPU6809.set("pc",0);
+	CPU6809.set("flags",0);
+	CPU6809.steps(1);
+	var s = (CPU6809.status());
+	console.log(s);
+	equal(s.pc,0,"PC");
+	//equal(s.flags & 0x0D,0x01,"Flags C");
+	equal(CPU6809.T(),3,"Timer");
+
+});
+
+nzv++;
+test( "BGT "+nzv, function() {
+	RAM = [0x2e,0xfe];
+	CPU6809.init(byteTo,byteAt,null);
+	CPU6809.set("pc",0);
+	CPU6809.set("flags",2);
+	CPU6809.steps(1);
+	var s = (CPU6809.status());
+	console.log(s);
+	equal(s.pc,2,"PC");
+	//equal(s.flags & 0x0D,0x01,"Flags C");
+	equal(CPU6809.T(),3,"Timer");
+
+});
+nzv++;
+test( "BGT "+nzv, function() {
+	RAM = [0x2e,0xfe];
+	CPU6809.init(byteTo,byteAt,null);
+	CPU6809.set("pc",0);
+	CPU6809.set("flags",4);
+	CPU6809.steps(1);
+	var s = (CPU6809.status());
+	console.log(s);
+	equal(s.pc,2,"PC");
+	//equal(s.flags & 0x0D,0x01,"Flags C");
+	equal(CPU6809.T(),3,"Timer");
+
+});
+nzv++;
+test( "BGT "+nzv, function() {
+	RAM = [0x2e,0xfe];
+	CPU6809.init(byteTo,byteAt,null);
+	CPU6809.set("pc",0);
+	CPU6809.set("flags",6);
+	CPU6809.steps(1);
+	var s = (CPU6809.status());
+	console.log(s);
+	equal(s.pc,2,"PC");
+	//equal(s.flags & 0x0D,0x01,"Flags C");
+	equal(CPU6809.T(),3,"Timer");
+
+});
+nzv++;
+test( "BGT "+nzv, function() {
+	RAM = [0x2e,0xfe];
+	CPU6809.init(byteTo,byteAt,null);
+	CPU6809.set("pc",0);
+	CPU6809.set("flags",8);
+	CPU6809.steps(1);
+	var s = (CPU6809.status());
+	console.log(s);
+	equal(s.pc,2,"PC");
+	//equal(s.flags & 0x0D,0x01,"Flags C");
+	equal(CPU6809.T(),3,"Timer");
+
+});
+nzv++;
+test( "BGT "+nzv, function() {
+	RAM = [0x2e,0xfe];
+	CPU6809.init(byteTo,byteAt,null);
+	CPU6809.set("pc",0);
+	CPU6809.set("flags",10);
+	CPU6809.steps(1);
+	var s = (CPU6809.status());
+	console.log(s);
+	equal(s.pc,0,"PC");
+	//equal(s.flags & 0x0D,0x01,"Flags C");
+	equal(CPU6809.T(),3,"Timer");
+
+});
+nzv++;
+test( "BGT "+nzv, function() {
+	RAM = [0x2e,0xfe];
+	CPU6809.init(byteTo,byteAt,null);
+	CPU6809.set("pc",0);
+	CPU6809.set("flags",12);
+	CPU6809.steps(1);
+	var s = (CPU6809.status());
+	console.log(s);
+	equal(s.pc,2,"PC");
+	//equal(s.flags & 0x0D,0x01,"Flags C");
+	equal(CPU6809.T(),3,"Timer");
+
+});
+nzv++;
+test( "BGT "+nzv, function() {
+	RAM = [0x2e,0xfe];
+	CPU6809.init(byteTo,byteAt,null);
+	CPU6809.set("pc",0);
+	CPU6809.set("flags",14);
+	CPU6809.steps(1);
+	var s = (CPU6809.status());
+	console.log(s);
+	equal(s.pc,2,"PC");
+	//equal(s.flags & 0x0D,0x01,"Flags C");
+	equal(CPU6809.T(),3,"Timer");
+
+});
+
+
+for (var nzv = 0;nzv<8;nzv++) {
+	var n = (nzv & 4) ? 1:0;
+	var z = (nzv & 2) ? 1:0;
+	var v = (nzv & 1) ? 1:0;
+	console.log(nzv, n==v && z==0);
+}
+
+module("Simple BRA tessts");
 
 test( "BRA - relative addr 1", function() {
 	RAM = [0x20,0xfe];
@@ -258,8 +382,6 @@ test( "LDY extended", function() {
 });
 
 
-
-
 module("Disassembler");
 
 test("simple instruction", function(){
@@ -327,4 +449,3 @@ test("Prefixed 0x11, indexed, offset 16+PC", function(){
 	equal (d[0],"CMPU 520,PC");
 	equal (d[1],5);
 });
-
