@@ -1364,7 +1364,13 @@ var oSUB = function(b,v) {
     if (b == 0x80) CC |= F_OVERFLOW;
     b = (~b & 0xff) + 1;
     if (b === 0) CC |= F_ZERO;
-    if (b & 0x80) CC |= F_NEGATIVE | F_CARRY;
+    else {
+      CC |= F_CARRY;
+    }
+    if (b & 0x80) {
+      CC |= F_NEGATIVE;
+    }
+    if (b & 0x80) CC |= F_NEGATIVE;
     return b;
   };
 
@@ -1666,7 +1672,7 @@ var oSUB = function(b,v) {
         break;
       case 0x3b: //RTI
         CC = PULLB();
-        if (cc & F_ENTIRE) {
+        if (CC & F_ENTIRE) {
           T += 9;
           rA = PULLB();
           rB = PULLB();
